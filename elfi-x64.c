@@ -1,8 +1,6 @@
 #include "./elfi.h"
 
-ELFIAPI int elfi_x64(const char *buffer, const size_t size) {
-    (void) size;
-
+ELFIAPI int elfi_x64(const char *buffer) {
     /* helper 'exitcode' variable for goto statement... */
     int exitcode = 1;
    
@@ -46,14 +44,11 @@ ELFIAPI int elfi_x64(const char *buffer, const size_t size) {
     for (size_t i = 0; i < ehdr->e_shnum; i++) {
         /* section header object... */
         Elf64_Shdr shdr = shdr_tb[i];
-        if (shdr.sh_type == SHT_NULL) {
-            continue;
-        }
         
         /* helper variables... */
         const char *sh_name = shstrtab + shdr.sh_name;
 
-        printf(" > %s:\n", sh_name);
+        printf(" > %s:\n", sh_name[0] ? sh_name : "...");
         printf("    - Type:   %s\n", elfi_shdr_getType(shdr.sh_type));
         printf("    - Addr:   %016lx\n", shdr.sh_addr);
         printf("    - Offset: %ld\n", shdr.sh_offset);
@@ -84,25 +79,22 @@ ELFIAPI int elfi_x64(const char *buffer, const size_t size) {
                     for (size_t j = 0; j < shdr.sh_size / sizeof(Elf64_Sym); j++) {
                         /* symbol table object... */
                         Elf64_Sym sym = sym_tb[j];
-                        if (!sym.st_name) {
-                            continue;
-                        }
 
                         /* helper variables... */
                         const uint8_t st_bind= ELF64_ST_BIND(sym.st_info);
                         const uint8_t st_type = ELF64_ST_TYPE(sym.st_info);
                         const char *st_name = tab + sym.st_name;
 
-                        printf("     > %s:\n", st_name);
-                        printf("        - Type:  %d\n", st_type);
-                        printf("        - Bind:  %d\n", st_bind);
+                        printf("     > %s:\n", st_name[0] ? st_name : "...");
+                        printf("        - Type:  %s\n", elfi_sym_getType(st_type));
+                        printf("        - Bind:  %s\n", elfi_sym_getBind(st_bind));
                         printf("        - Other: %d\n", sym.st_other);
                         printf("        - Shndx: %d\n", sym.st_shndx);
+                        printf("        - Value: %ld\n", sym.st_value);
+                        printf("        - Size:  %ld\n", sym.st_size);
 
 
-                        if (j < shdr.sh_size / sizeof(Elf64_Sym) - 1) {
-                            putc(10, stdout);
-                        }
+                        if (j < shdr.sh_size / sizeof(Elf64_Sym) - 1) { putc(10, stdout); }
                     }
 
                     free(sym_tb), sym_tb = 0;

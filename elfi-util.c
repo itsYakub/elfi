@@ -43,6 +43,31 @@ ELFIAPI char *elfi_shdr_getType(const uint32_t type) {
     }
 }
 
+ELFIAPI char *elfi_sym_getType(const uint8_t type) {
+    switch (type) {
+        case (STT_OBJECT)  : { return ("STT_OBJECT"); }
+        case (STT_FUNC)    : { return ("STT_FUNC"); }
+        case (STT_SECTION) : { return ("STT_SECTION"); }
+        case (STT_FILE)    : { return ("STT_FILE"); }
+        case (STT_LOPROC)  : { return ("STT_LOPROC"); }
+        case (STT_HIPROC)  : { return ("STT_HIPROC"); }
+        
+        default            : { return ("STT_NOTYPE"); }
+    }
+}
+
+ELFIAPI char *elfi_sym_getBind(const uint8_t bind) {
+    switch (bind) {
+        case (STB_LOCAL)   : { return ("STB_LOCAL"); }
+        case (STB_GLOBAL)  : { return ("STB_GLOBAL"); }
+        case (STB_WEAK)    : { return ("STB_WEAK"); }
+        case (STB_LOPROC)  : { return ("STB_LOPROC"); }
+        case (STB_HIPROC)  : { return ("STB_HIPROC"); }
+        
+        default            : { return ("STT_NOTYPE"); }
+    }
+}
+
 ELFIAPI void *elfi_extract(const char *buffer, const size_t size, const size_t offset) {
     /* null-check... */
     if (!buffer) { return (0); }

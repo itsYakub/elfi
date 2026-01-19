@@ -68,8 +68,8 @@ ELFIAPI int elfi_processFile(const char *buffer, const size_t size) {
 
     /* check ELF arch... */
     switch (elfi_getArch(buffer)) {
-        case (ELFCLASS32) : { return (elfi_x32(buffer, size)); }
-        case (ELFCLASS64) : { return (elfi_x64(buffer, size)); }
+        case (ELFCLASS32) : { return (elfi_x32(buffer)); }
+        case (ELFCLASS64) : { return (elfi_x64(buffer)); }
 
         default : {
             printf("%s: invalid file architecture\n", g_progName);

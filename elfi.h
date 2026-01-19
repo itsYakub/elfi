@@ -27,11 +27,11 @@ ELFIAPI int elfi_processFile(const char *, const size_t);
 
 /* elfi-x32.c */
 
-ELFIAPI int elfi_x32(const char *, const size_t);
+ELFIAPI int elfi_x32(const char *);
 
 /* elfi-x64.c */
 
-ELFIAPI int elfi_x64(const char *, const size_t);
+ELFIAPI int elfi_x64(const char *);
 
 /* elfi-util.c */
 
@@ -39,6 +39,9 @@ ELFIAPI int elfi_getMagic(const char *);
 ELFIAPI int elfi_getArch(const char *);
 
 ELFIAPI char *elfi_shdr_getType(const uint32_t);
+
+ELFIAPI char *elfi_sym_getType(const uint8_t);
+ELFIAPI char *elfi_sym_getBind(const uint8_t);
 
 ELFIAPI void *elfi_extract(const char *, const size_t, const size_t);
 
