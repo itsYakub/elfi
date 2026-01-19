@@ -6,7 +6,7 @@ MK_NAME		= elfi
 # ========
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -std=c99 -O2
+CFLAGS	= -Wall -Wextra -Werror -std=c99 -ggdb3
 DFLAGS	= # ...
 LFLAGS  = # ...
 IFLAGS  = # ...
@@ -16,7 +16,8 @@ IFLAGS  = # ...
 OBJS	= $(SRCS:.c=.o)
 SRCS	= $(MK_ROOT)elfi-main.c	\
 		  $(MK_ROOT)elfi-x32.c	\
-		  $(MK_ROOT)elfi-x64.c
+		  $(MK_ROOT)elfi-x64.c	\
+		  $(MK_ROOT)elfi-util.c
 
 # =======
 
