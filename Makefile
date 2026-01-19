@@ -36,6 +36,12 @@ clean :
 	rm -f $(OBJS)
 	rm -f $(TARGET)
 
+
+.PHONY : install
+
+install : $(TARGET)
+	cp -f $^ /usr/local/bin
+
 # =======
 
 $(TARGET) : $(OBJS)
